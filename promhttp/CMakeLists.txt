@@ -38,7 +38,7 @@ set(prom_include_dir ${CMAKE_CURRENT_SOURCE_DIR}/../prom/include)
 set(public_files ${public_dir}/promhttp.h)
 set(private_files ${private_dir}/promhttp.c)
 
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../prom/build)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../prom)
 
 include(FindThreads)
 
