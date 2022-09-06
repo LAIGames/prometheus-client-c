@@ -11,3 +11,12 @@ _CPack_Packages/
 *tar.gz
 *vgcore*
 *.o
+CMakeCache.txt
+CMakeFiles/
+CPackConfig.cmake
+CPackSourceConfig.cmake
+prom/Makefile
+cmake_install.cmake
+install_manifest.txt
+*.so
+promhttp/Makefile

@@ -64,6 +64,19 @@ target_compile_options(promhttp PUBLIC "-Werror" "-Wuninitialized" "-Wall" "-Wno
 
 target_link_libraries(promhttp PUBLIC Threads::Threads prom microhttpd)
 
+if (NOT CPACK_DEBIAN_PACKAGE_ARCHITECTURE)
+    find_program(DPKG_CMD dpkg)
+    mark_as_advanced(DPKG_CMD)
+    if (NOT DPKG_CMD)
+        message(STATUS "Can not find dpkg in your path, default to i386.")
+        set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386)
+    else ()
+        execute_process(COMMAND "${DPKG_CMD}" --print-architecture
+                OUTPUT_VARIABLE CPACK_DEBIAN_PACKAGE_ARCHITECTURE
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+    endif ()
+endif ()
+
 set(CPACK_PACKAGE_NAME libpromhttp-dev)
 set(CPACK_GENERATOR TGZ;DEB)
 set(CPACK_PACKAGE_VENDOR DigitalOcean)
@@ -75,6 +88,8 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A library providing a lightweight HTTP Se
 set(CPACK_PACKAGE_HOMEPAGE_URL https://github.internal.digitalocean.com/timeseries/prometheus-client-c)
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libprom-dev (= ${Version})")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libmicrohttpd-dev")
+set(CPACK_PACKAGE_CONTACT "deb@laigames.com")
+set(CPACK_DEBIAN_FILE_NAME ${CPACK_PACKAGE_NAME}_${Version}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}.deb)
 
 include(CPack)
 include(GNUInstallDirs)
